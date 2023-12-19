@@ -27,7 +27,7 @@ jobs:
         with:
           repository: 'charles-lunarg/Vulkan-Loader'
           path: 'vulkan-loader'
-          ref: 'fix_win32_surface_ptr_dereference'
+          ref: 'fix_incorrect_surface_casting'
 
       - name: Setup MSYS2
         uses: msys2/setup-msys2@v2
