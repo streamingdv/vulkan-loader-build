@@ -25,7 +25,7 @@ jobs:
       - name: Checkout vulkan-loader repository
         uses: actions/checkout@v2
         with:
-          repository: 'KhronosGroup/Vulkan-Loader'
+          repository: 'charles-lunarg/Vulkan-Loader'
           path: 'vulkan-loader'
 
       - name: Setup MSYS2
