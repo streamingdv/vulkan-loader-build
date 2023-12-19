@@ -27,6 +27,7 @@ jobs:
         with:
           repository: 'charles-lunarg/Vulkan-Loader'
           path: 'vulkan-loader'
+          ref: 'fix_win32_surface_ptr_dereference'
 
       - name: Setup MSYS2
         uses: msys2/setup-msys2@v2
