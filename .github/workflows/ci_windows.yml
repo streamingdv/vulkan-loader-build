@@ -57,7 +57,7 @@ jobs:
       - name: Build vulkan-loader
         working-directory: ./vulkan-loader
         run: |
-          cmake -S . -B build -D UPDATE_DEPS=On -D
+          cmake -S . -B build -D UPDATE_DEPS=On
           cmake --build build --config Release
         shell: msys2 {0}
 
