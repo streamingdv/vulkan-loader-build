@@ -25,9 +25,8 @@ jobs:
       - name: Checkout vulkan-loader repository
         uses: actions/checkout@v2
         with:
-          repository: 'charles-lunarg/Vulkan-Loader'
+          repository: 'KhronosGroup/Vulkan-Loader'
           path: 'vulkan-loader'
-          ref: 'fix_incorrect_surface_casting'
 
       - name: Setup MSYS2
         uses: msys2/setup-msys2@v2

@@ -1,0 +1,46 @@
+name: CI macOS
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-binaries-macos:
+    name: Build macOS Vulkan Loader
+    strategy:
+      matrix:
+        # macOS supports x86_64 and arm64 architectures
+        arch: [x86_64, arm64]
+
+    runs-on: ${{ matrix.arch == 'x86_64' && 'macos-14-large' || 'macos-14' }}
+
+    steps:
+      - name: Checkout libplacebo-jni repository
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Checkout vulkan-loader repository
+        uses: actions/checkout@v2
+        with:
+          repository: 'KhronosGroup/Vulkan-Loader'
+          path: 'vulkan-loader'
+
+      - name: Set up Homebrew
+        run: |
+          brew update
+          brew install pkg-config cmake ninja jq lcms2 sdl2 vulkan-headers
+
+      - name: Build vulkan-loader
+        working-directory: ./vulkan-loader
+        run: |
+          cmake -S . -B build -G "Ninja" \
+            -DCMAKE_OSX_ARCHITECTURES=${{ matrix.arch }} \
+            -DCMAKE_BUILD_TYPE=Release
+          cmake --build build
+        shell: bash
+
+      - name: Upload Vulkan Loader Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: vulkan-loader-artefacts-${{ matrix.arch }}
+          path: ${{github.workspace}}/vulkan-loader/build
