@@ -35,12 +35,19 @@ jobs:
         run: |
           cmake -S . -B build -G "Ninja" \
             -DCMAKE_OSX_ARCHITECTURES=${{ matrix.arch }} \
-            -DCMAKE_BUILD_TYPE=Release
+            -DCMAKE_BUILD_TYPE=Release \
+            -DBUILD_SHARED_LIBS=OFF
           cmake --build build
         shell: bash
+
+      - name: Copy Vulkan Headers
+        # Copy Vulkan headers to the vulkan-loader directory before uploading
+        run: |
+          mkdir -p ${{ github.workspace }}/vulkan-loader/include
+          cp -r $(brew --prefix vulkan-headers)/include ${{github.workspace}}/vulkan-loader/include
 
       - name: Upload Vulkan Loader Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: vulkan-loader-artefacts-${{ matrix.arch }}
-          path: ${{github.workspace}}/vulkan-loader/build
+          path: ${{github.workspace}}/vulkan-loader
